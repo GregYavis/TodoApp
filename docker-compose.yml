@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  db:
+    environment:
+     MYSQL_DATABASE: 'db'
+     # # So you don't have to use root, but you can if you like
+     MYSQL_USER: 'user'
+     # # You can use whatever password you like
+     MYSQL_PASSWORD: 'password'
+     # # Password for root access
+     MYSQL_ROOT_PASSWORD: 'password'
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    ports:
+      - '3306:3306'
+    #expose:
+    #  - '3306'
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c 'python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
+    volumes:
+      - ./:/app
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db

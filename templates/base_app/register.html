@@ -3,11 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    {% block title %}Register{% endblock %}
 </head>
 <body>
 {%  block content %}
 
+    <div class="card-body">
 <h2>Register</h2>
 <form method="POST">
     {% csrf_token %}
@@ -15,7 +16,9 @@
     <input type="submit" value="Register">
 
 </form>
-<p>Have an account? <a href="{% url 'login' %}">Login</a></p>
+    <p>Have an account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+
 {% endblock content %}
 </body>
 </html>
